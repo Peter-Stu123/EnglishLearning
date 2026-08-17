@@ -1,0 +1,300 @@
+{
+  "main": {
+    "id": "791c6eeefd5e139f",
+    "type": "split",
+    "children": [
+      {
+        "id": "c68337089ccd0357",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6450cfd4d58ee58d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "英语词义分类数据库（大学版）/36家务劳动/00家务劳动组目录（复习）.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "00家务劳动组目录（复习）"
+            }
+          },
+          {
+            "id": "d0105d2334132548",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "自行整理/07 词组.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "07 词组"
+            }
+          },
+          {
+            "id": "201fe5fb36ceb9e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "英语词义分类数据库（大学版）/42呈现隐藏/00呈现隐藏组目录（复习）.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "00呈现隐藏组目录（复习）"
+            }
+          },
+          {
+            "id": "0e8b954adf72f350",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "英语词义分类数据库（大学版）/41安危存亡/00安危存亡组目录（复习）.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "00安危存亡组目录（复习）"
+            }
+          },
+          {
+            "id": "8c535cc207f5524c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "自行整理/04熟词生义.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "04熟词生义"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ce623567b2fed497",
+    "type": "split",
+    "children": [
+      {
+        "id": "adf5fd8e73842110",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cde4d52ad782da4b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "256232dff04d9253",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "distinguish",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "f42ede080cb32c4b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          },
+          {
+            "id": "4131a9c0c74702ae",
+            "type": "leaf",
+            "state": {
+              "type": "langr-search-panel",
+              "state": {},
+              "icon": "book",
+              "title": "查词面板"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "11b2fb48c8fbe969",
+    "type": "split",
+    "children": [
+      {
+        "id": "76a834fb34739f8b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "895c4dee58151579",
+            "type": "leaf",
+            "state": {
+              "type": "todo",
+              "state": {},
+              "icon": "checkmark",
+              "title": "Todo List"
+            }
+          },
+          {
+            "id": "499c7fada4b9cca3",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
+            }
+          },
+          {
+            "id": "e075a6d931db7135",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "8008d49e9e37413b",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
+          },
+          {
+            "id": "c91208775ebe75a9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "自行整理/06 生词汇总.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "06 生词汇总 的反向链接列表"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 224.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:创建新数据库": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "command-palette:打开命令面板": false,
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "publish:发布更改": false,
+      "obsidian-tts:Text to Speech": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian-language-learner:打开查词面板": false,
+      "obsidian-language-learner:打开新词面板": false,
+      "obsidian-language-learner:打开统计": false,
+      "obsidian-language-learner:单词列表": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "excel:创建 Excel 文件": false,
+      "pdf-plus:PDF++: Toggle auto-copy": false,
+      "pdf-plus:PDF++: Toggle auto-focus": false,
+      "pdf-plus:PDF++: Toggle auto-paste": false,
+      "obsidian-spaced-repetition:复习卡片": false
+    }
+  },
+  "active": "8c535cc207f5524c",
+  "lastOpenFiles": [
+    "自行整理/06 生词汇总.md",
+    "自行整理/04熟词生义.md",
+    "自行整理/05 情景词.md",
+    "自行整理/07 词组.md",
+    "自行整理/03连接词.md",
+    "自行整理/01同义替换.md",
+    "自行整理/02形近词.md",
+    "自行整理/assets/01同义替换/file-20260814010500000.png",
+    "自行整理/assets/01同义替换",
+    "自行整理/长难句.md",
+    "自行整理/assets/05 情景词/file-20260814002807927.png",
+    "自行整理/assets/05 情景词/file-20260810234430477.png",
+    "自行整理/assets/05 情景词/file-20260810224416795.png",
+    "自行整理/assets/07 词组/file-20260810022856518.png",
+    "自行整理/assets/05 情景词",
+    "自行整理/assets/07 词组",
+    "自行整理/assets",
+    "语法/固定搭配/of/of用法重要.md",
+    "语法/固定搭配/of",
+    "英语词义分类数据库（大学版）/23美丑/01美丽 丑陋.md",
+    "语法/句子分析/03复合句/01名词性从句.md",
+    "英语词义分类数据库（大学版）/48记忆扩展/01纪念 名声.md",
+    "英语词义分类数据库（大学版）/48记忆扩展/00记忆扩展组目录（复习）.md",
+    "英语词义分类数据库（大学版）/01基础领域/12科教/05专家 权威.md",
+    "英语词义分类数据库（大学版）/01基础领域/12科教/00科教组目录（复习）.md",
+    "外刊学习/2027-7/The world this  week- politics.md",
+    "英语词义分类数据库（大学版）/02专业学科/02地理/00地理组目录（复习）.md",
+    "英语词义分类数据库（大学版）/27位移/01移动 静止.md",
+    "英语词义分类数据库（大学版）/02专业学科/02地理/06江河 湖海.md",
+    "英语词义分类数据库（大学版）/14态度性格/00态度性格组目录（复习）.md",
+    "英语词义分类数据库（大学版）/14态度性格/33谦虚 谨慎 小心 细心 耐心.md",
+    "英语词义分类数据库（大学版）/35基础运动/03行动 进行.md",
+    "英语词义分类数据库（大学版）/35基础运动/00基础运动组目录（复习）.md",
+    "英语词义分类数据库（大学版）/50达成意志/03应用 使用.md",
+    "英语词义分类数据库（大学版）/03时间度量/03长短/09短暂 临时.md",
+    "外刊学习/2027-7/TheEconomist.2026.07.04.pdf",
+    "语法/英语知识总结.pdf",
+    "外刊学习/The Dancing Species",
+    "外刊学习/The Dancing Species/handlebook.pdf",
+    "外刊学习/The Dancing Species/第01单元01-03讲义.pdf",
+    "英语词义分类数据库（大学版）/附件图片/1.jpg",
+    "英语词义分类数据库（大学版）/附件图片/住院搬砖.jpg",
+    "英语词义分类数据库（大学版）/附件图片/移植.jpg",
+    "英语词义分类数据库（大学版）/附件图片/校对稿.jpg",
+    "英语词义分类数据库（大学版）/附件图片/硼替佐米.jpg"
+  ]
+}

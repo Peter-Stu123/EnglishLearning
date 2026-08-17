@@ -1,0 +1,11 @@
+{
+  "theme": "moonstone",
+  "baseFontSize": 17,
+  "accentColor": "",
+  "translucency": false,
+  "enabledCssSnippets": [
+    "默认黑色背景"
+  ],
+  "cssTheme": "Minimal",
+  "baseFontSizeAction": true
+}

@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语词汇记忆 - 六级/考研</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #252f3f;
+  --border: #334155;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --accent: #38bdf8;
+  --accent2: #a78bfa;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+header .sub {
+  font-size: 0.75rem;
+  color: var(--text2);
+}
+
+/* Top bar */
+.top-bar {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.top-bar input {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+}
+.top-bar input:focus { border-color: var(--accent); }
+.top-bar input::placeholder { color: var(--text2); }
+.mode-tabs {
+  display: flex;
+  gap: 4px;
+}
+.mode-tab {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: 0.15s;
+}
+.mode-tab:hover { color: var(--text); border-color: var(--accent); }
+.mode-tab.active { background: var(--accent); color: #0f172a; border-color: var(--accent); font-weight: 600; }
+
+/* Stats row */
+.stats-row {
+  display: flex;
+  gap: 10px;
+  padding: 0 24px 16px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: center;
+  min-width: 60px;
+  cursor: pointer;
+  transition: 0.15s;
+  user-select: none;
+}
+.stat:hover { border-color: var(--accent); transform: translateY(-1px); }
+.stat.active { border-color: var(--accent); background: rgba(56,189,248,0.08); }
+.stat .n { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+.stat .l { font-size: 0.65rem; color: var(--text2); text-transform: uppercase; }
+
+/* Category tabs */
+.cat-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 24px 16px;
+  flex-wrap: wrap;
+}
+.cat-tab {
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transition: 0.15s;
+}
+.cat-tab:hover { border-color: var(--accent); color: var(--text); }
+.cat-tab.active { background: var(--accent2); color: #fff; border-color: var(--accent2); }
+
+/* Content */
+.content { padding: 0 24px 40px; }
+
+/* ===== LIST VIEW ===== */
+.group-list { display: flex; flex-direction: column; gap: 8px; }
+.group-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.15s;
+}
+.group-header:hover { background: var(--surface2); }
+.group-header .gname {
+  font-weight: 600;
+  font-size: 0.95rem;
+  flex: 1;
+}
+.group-header .gcount {
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: rgba(56,189,248,0.1);
+  padding: 3px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+.group-header .garrow {
+  font-size: 0.7rem;
+  color: var(--text2);
+  transition: 0.2s;
+}
+.group-item.open .garrow { transform: rotate(90deg); }
+.group-body {
+  display: none;
+  padding: 0 16px 14px;
+  border-top: 1px solid var(--border);
+}
+.group-item.open .group-body { display: block; }
+.group-body .word-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 12px;
+}
+.word-tag {
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.15s;
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid transparent;
+  position: relative;
+}
+.word-tag:hover { border-color: var(--accent); }
+.word-tag .tag-mean {
+  display: none;
+  font-size: 0.7rem;
+  color: var(--accent2);
+  margin-left: 6px;
+}
+.word-tag.show-mean .tag-mean { display: inline; }
+
+/* ===== STUDY VIEW ===== */
+.study-setup {
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.study-setup h3 { font-size: 1.1rem; margin-bottom: 20px; }
+.setup-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.setup-row label {
+  font-size: 0.85rem;
+  color: var(--text2);
+  min-width: 60px;
+}
+.setup-row select, .setup-row input {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+}
+.setup-row select:focus { border-color: var(--accent); }
+.cat-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cat-check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  transition: 0.15s;
+}
+.cat-check.checked { border-color: var(--accent); background: rgba(56,189,248,0.1); color: var(--text); }
+.cat-check input { display: none; }
+.btn {
+  padding: 10px 24px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: 0.15s;
+}
+.btn-go {
+  background: var(--accent);
+  color: #0f172a;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 1rem;
+}
+.btn-go:hover { opacity: 0.9; }
+
+/* Study card */
+.study-container { max-width: 500px; margin: 0 auto; text-align: center; }
+.study-progress {
+  height: 6px;
+  background: var(--surface);
+  border-radius: 3px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.study-progress .bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: 0.3s;
+}
+.study-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 50px 30px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  user-select: none;
+  position: relative;
+}
+.study-card:hover { border-color: var(--accent); }
+.study-card.flipped { border-color: var(--accent2); }
+.study-card .sc-word {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  transition: 0.2s;
+}
+.study-card .sc-pron {
+  font-size: 0.9rem;
+  color: var(--text2);
+  margin-top: 6px;
+}
+.study-card .sc-mean {
+  font-size: 1.3rem;
+  color: var(--accent2);
+  font-weight: 600;
+  margin-top: 10px;
+}
+.study-card .sc-group {
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-top: 6px;
+}
+.study-card .sc-num {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+.study-card .sc-hint {
+  position: absolute;
+  bottom: 14px;
+  font-size: 0.7rem;
+  color: var(--text2);
+}
+.study-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.btn-know {
+  background: var(--success);
+  color: #000;
+  padding: 10px 28px;
+}
+.btn-unknown {
+  background: var(--danger);
+  color: #fff;
+  padding: 10px 28px;
+}
+.btn-neutral {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+}
+
+/* Study results */
+.study-results {
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  text-align: center;
+}
+.study-results h3 { margin-bottom: 12px; }
+.result-stat {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 16px 0;
+}
+.result-stat div { text-align: center; }
+.result-stat .big { font-size: 2rem; font-weight: 700; }
+.result-stat .big.green { color: var(--success); }
+.result-stat .big.red { color: var(--danger); }
+.unknown-list {
+  text-align: left;
+  margin-top: 16px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.unknown-list .ul-word {
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 3px;
+  border-radius: 4px;
+  background: rgba(239,68,68,0.1);
+  font-size: 0.85rem;
+}
+
+/* Empty */
+.empty { text-align: center; padding: 60px 20px; color: var(--text2); }
+
+/* Saved unknown badge */
+.saved-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: rgba(239,68,68,0.15);
+  color: var(--danger);
+  font-size: 0.75rem;
+  margin-left: 8px;
+}
+
+@media (max-width: 600px) {
+  .study-card { padding: 30px 16px; min-height: 200px; }
+  .study-card .sc-word { font-size: 1.5rem; }
+  .cat-tabs { gap: 2px; }
+  .cat-tab { padding: 5px 8px; font-size: 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>English Vocabulary · 英语词汇记忆</h1>
+  <div class="sub">六级 · 考研 | 同义替换 · 形近词 · 熟词生义 · 情景词 · 词组 | 共 <span id="totalCount">0</span> 词</div>
+</header>
+
+<div class="top-bar">
+  <input type="text" id="searchInput" placeholder="搜索单词或释义...">
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-mode="list">列表浏览</button>
+    <button class="mode-tab" data-mode="study">闪卡学习</button>
+  </div>
+</div>
+
+<div class="stats-row" id="statsRow"></div>
+<div class="cat-tabs" id="catTabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+// ========== DATA ==========
+const vocabularyData = {
+  synonym: [
+    { group:'著名的', words:['prominent','eminent','distinguished','outstanding','remarkable','fabulous','terrific','brilliant','fantastic','predominant','incredible','extraordinary','exceptional','gorgeous','striking'] },
+    { group:'壮阔的', words:['splendid','spectacular'] },
+    { group:'潮湿的', words:['moist','humid','damp','wet'] },
+    { group:'危险/困境', words:['plight','danger','risk','hazard','peril','nasty','jeopardy'] },
+    { group:'恶化/加重', words:['aggravate','deteriorate','sharpen','magnify','complicate','degradation','exacerbate'] },
+    { group:'几乎不', words:['scarcely','barely','rarely','hardly'] },
+    { group:'充足的', words:['ample','enough','sufficient','abundant','adequate','plentiful'] },
+    { group:'分开/隔离', words:['isolate','separate','segregate','insulate'] },
+    { group:'场所(会议)', words:['workshop','seminar','congress','conference','parliament'] },
+    { group:'减轻', words:['relieve','allay','alleviate','assuage','lighten','ease'] },
+    { group:'激励/刺激/动机', words:['stimulate','stimulus','incentive','motivate','motivation','spur','trigger','agitate'] },
+    { group:'巨大的', words:['huge','titanic','enormous','immense','giant','gigantic','vast','massive','tremendous'] },
+    { group:'倡议', words:['initiative','advocacy'] },
+    { group:'消除/根除', words:['extinct','eradicate','eliminate','exterminate','expel'] },
+    { group:'负面情绪', words:['passive','negative','pessimistic'] },
+    { group:'正面情绪', words:['positive','optimistic','passion','passionate','objective','subjective'] },
+    { group:'分散', words:['scatter','disperse','spread','diffuse','permeate'] },
+    { group:'惊吓', words:['startle','shock','disturb','scared','scare','frighten'] },
+    { group:'避难所', words:['refuge','corridor','harbour','sanctuary'] },
+    { group:'滋养/养育', words:['nurture','nourish','cultivate','foster'] },
+    { group:'区别/差异', words:['difference','distinction','discrepancy','discrimination','imbalance','gap'] },
+    { group:'剩余物', words:['remnant','reminder'] },
+    { group:'腐蚀/腐烂', words:['rot','rotten','erode','erosion','corrode','corrosion','rat','decay'] },
+    { group:'雄伟的', words:['grand','magnificent','majestic','imposing'] },
+    { group:'资格证书', words:['credential','certificate','diploma','qualification','licence'] },
+    { group:'遵守', words:['compliance','adhere','conform','comply','obey'] },
+    { group:'本能', words:['instinct','intuition'] },
+    { group:'内在的', words:['inherent','intrinsic','internal'] },
+    { group:'谴责', words:['deplore','condemn','accuse','charge'] },
+    { group:'观众', words:['spectator','audience'] },
+    { group:'压迫', words:['oppress','compress','oppression','suppress'] },
+    { group:'直率的', words:['outright','straightforward','frank','candid','blunt'] },
+    { group:'替换', words:['displace','replace','substitute'] },
+    { group:'有争议的', words:['contentious','debatable','controversial','disputatious'] },
+    { group:'创造力', words:['ingenuity','creativity','resourcefulness','originality'] },
+    { group:'吸引/诱惑', words:['lure','allure','induce','tempt','attract'] },
+    { group:'承认', words:['admit','acknowledge','confess','allow','admission','concede'] },
+    { group:'疯狂的', words:['frantic','crazy','mad','insane'] },
+    { group:'深思', words:['reflect','ponder','consideration','thoughtful','contemplate','meditation'] },
+    { group:'个性', words:['individuality','identity','personality','character'] },
+    { group:'连续的', words:['continuous','successive','serial','series','sequential','consecutive','coherent'] },
+    { group:'令人敬畏的', words:['formidable','demanding','awesome','tremendous','overwhelming'] },
+    { group:'协同/合作', words:['concerted','collaborative','joint','cooperative'] },
+    { group:'仁慈的', words:['lenient','merciful','compassionate'] },
+    { group:'缺乏', words:['deprivation','lack','deficiency'] },
+    { group:'负有责任的', words:['accountable','responsible','liable'] }
+  ],
+  shape: [
+    { group:'advent 系列', words:['advent','adventure','adventurous'] },
+    { group:'aggressive 系列', words:['aggressive','aggression','aggress','aggressor','aggressively'] },
+    { group:'通道类', words:['aisle','hall','corridor','passage'] },
+    { group:'affiliation 系列', words:['affiliation','affiliate'] },
+    { group:'宣布/声称 系列', words:['announce','declare','claim','allege','proclaim','acclaim','reclaim','declaim'] },
+    { group:'appropriation 系列', words:['appropriation','appreciate','proportion','proper','property'] },
+    { group:'allay 形近', words:['allay','rally','alleviate','alloy','aisle','alien','align','alley','ally','allot','valley'] },
+    { group:'avert 系列', words:['avert','averse','aversion'] },
+    { group:'血管类', words:['artery','vein','vessel','vain'] },
+    { group:'assemble 形近', words:['assemble','resemble'] },
+    { group:'alien 系列', words:['alien','alienate','alleviate','alliance'] },
+    { group:'adhere 系列', words:['adhere','adhesive','cohesive','coherent','inherent'] },
+    { group:'承认类', words:['admittedly','undeniably','certainly','It is true that'] },
+    { group:'arrogant 形近', words:['arrogant','elegant','relevant','ignorant'] },
+    { group:'acquaintance', words:['acquaintance'] },
+    { group:'belief 形近', words:['belief','relief','grieve','grief','brief','briefing'] },
+    { group:'baffle 形近', words:['baffle','buffalo'] },
+    { group:'considerate 系列', words:['considerate','considerable','considerably'] },
+    { group:'chess 形近', words:['chess','chest','cheese','chase','cheer','cheery','cherry'] },
+    { group:'customary 系列', words:['customary','customs','customer','consume','customarily'] },
+    { group:'冷的程度', words:['chilly','cold','cool','frosty','freezing','icy'] },
+    { group:'credible 系列', words:['credible','incredible','credit'] },
+    { group:'tractor 系列', words:['contractor','tractor','distract','extract','subtract'] },
+    { group:'criterion 系列', words:['criterion','critical','criticize','criticism'] },
+    { group:'crack 系列', words:['crack','crack down','crush','wreck'] },
+    { group:'company 形近', words:['company','companion','companionship','campaign'] },
+    { group:'commend 形近', words:['commend','command','commence','commerce','recommend','comment','common'] },
+    { group:'casualty 形近', words:['casualty','usually','casual','causal','mortality','occasion'] },
+    { group:'council 形近', words:['council','counsel','conceal','cancel','console'] },
+    { group:'contend 系列', words:['contend','contention','contentious','content','contentment','consent'] },
+    { group:'condense 形近', words:['condense','concede','condemn','precede'] },
+    { group:'corporate 系列', words:['corporate','corporation','coordinate','collaborate','cooperate'] },
+    { group:'conspicuous 形近', words:['conspicuous','perspicacious','suspicious'] },
+    { group:'carve 形近', words:['carve','cave','crave'] },
+    { group:'compliance 形近', words:['compliance','imply','comply','compliment','compel'] },
+    { group:'coincide 系列', words:['coincide','incident','incidental'] },
+    { group:'converse 系列', words:['converse','conversation','conserve','reserve','deserve'] },
+    { group:'contempt 系列', words:['contempt','tempt','despise','attempt','contemplate'] },
+    { group:'contagious 形近', words:['contagious','contaminate'] },
+    { group:'deed 形近', words:['deed','feed','indeed','reed','seed','deem'] },
+    { group:'diploma 系列', words:['diploma','diplomat','diplomacy','embassy'] },
+    { group:'default 近义', words:['default','flaw','fault'] },
+    { group:'decide 系列', words:['decide','decision','determine','determinate','determination'] },
+    { group:'distinguishable', words:['distinguishable'] },
+    { group:'diffuse 形近', words:['diffuse','confuse','refuse'] },
+    { group:'erosion 系列', words:['erosion','rot','rotten','corrode','rat','decay'] },
+    { group:'expire 形近', words:['expire','aspire','perspire'] },
+    { group:'exit 形近', words:['exit','entrance','exist','exert'] },
+    { group:'esthetic 形近', words:['esthetic','ethic','ethnic','athletics','logic'] },
+    { group:'elicit 形近', words:['elicit','elite'] },
+    { group:'esthetic/athlete', words:['esthetic','athlete','aesthete'] },
+    { group:'claim 系列', words:['exclaim','declaim','acclaim','proclaim'] },
+    { group:'escalate 系列', words:['escalate','escalator','elevator','elevate'] },
+    { group:'fibre 系列', words:['fibre','fabric','fabricate','fabricator','textile'] },
+    { group:'gene 系列', words:['gene','genius','generate','degenerate'] },
+    { group:'organism 系列', words:['organism','organic','organization'] },
+    { group:'gloom 形近', words:['gloom','bloom','groom','boom','doom','loom'] },
+    { group:'genuine 形近', words:['genuine','ingenuous','genius','authentic','actual'] },
+    { group:'harass 形近', words:['harass','harness','hardness','rein','saddle'] },
+    { group:'hypothesis 形近', words:['hypothesis','hypocrisy'] },
+    { group:'humiliate 系列', words:['humiliate','embarrass','shame','insult','humility','humble','humid'] },
+    { group:'iron 系列', words:['iron','ironic','ironical','sarcastic'] },
+    { group:'isolate 系列', words:['isolate','separate','segregate','insulate'] },
+    { group:'instruct 形近', words:['instruct','instruction','introduction','instrument'] },
+    { group:'intimidate 形近', words:['intimidate','intimate','imitate','timid','mediate','meditate'] },
+    { group:'ignite 形近', words:['ignite','irrigate','irritate','agitate'] },
+    { group:'imposition 系列', words:['imposition','impose','composition','proposition','exposition','opposition','disposition','suppose'] },
+    { group:'inherit 系列', words:['inherit','heir','heiress'] },
+    { group:'indulge 系列', words:['indulge','indulgent','indulgence'] },
+    { group:'jungle 形近', words:['jungle','judge','juggle'] },
+    { group:'rock 系列', words:['rock','rocky','rocker'] },
+    { group:'retort 形近', words:['retort','torture','contort','resort','refute','restore'] },
+    { group:'recession 系列', words:['recession','recede','recess','concession','succession'] },
+    { group:'recent 形近', words:['recent','assent','dissent','absent'] },
+    { group:'ration 系列', words:['ration','rational','irrational'] },
+    { group:'rigor 系列', words:['rigor','vigor','rigorous','rigid','trigger','vigorous','adversity','severity'] },
+    { group:'levy 形近', words:['levy','lever','navy','envy'] },
+    { group:'lofty 系列', words:['lofty','dignity','vanity','vain','arrogant','loyal','royal'] },
+    { group:'logistical 形近', words:['logistical','logistic','logical'] },
+    { group:'liberal 形近', words:['liberal','literal','literary','literacy','literature','liberate'] },
+    { group:'machine 系列', words:['machine','mechanise','mechanic','mechanical','mechanician','mechanism'] },
+    { group:'manual 形近', words:['manual','annual','manufacture','mutual'] },
+    { group:'mess 形近', words:['mess','mass','amass','assemble','moss'] },
+    { group:'morale 形近', words:['morale','mortal','moral'] },
+    { group:'medieval 系列', words:['medieval','medium','intermediate'] },
+    { group:'mash 形近', words:['mash','smash','crush','dash','rash'] },
+    { group:'novel 系列', words:['novel','novelty','innovate','innovation','innovator','innovative','undertaking'] },
+    { group:'nominate 形近', words:['nominate','dominate','illuminate'] },
+    { group:'nurture 系列', words:['nurture','cherish','nourish','breed','tutor','nature','nutrient'] },
+    { group:'scarcely 形近', words:['scarcely','scare','sacrifice','scary','scared','sacred','divine','satire','sarcasm'] },
+    { group:'setback 形近', words:['setback','feedback','drawback'] },
+    { group:'spectacle 系列', words:['spectacle','speculate','speculation','spectator'] },
+    { group:'strike 系列', words:['striking','stroke','strike'] },
+    { group:'sensitive 系列', words:['sensitive','sensible','sensation','sentimental','sentiment'] },
+    { group:'sinister 近义', words:['sinister','evil','wicked','vicious'] },
+    { group:'submissive 系列', words:['submissive','submit','submission'] },
+    { group:'struct 系列', words:['struct','structure','instruct','destruct','obstruct','construct','restructure','substructure'] },
+    { group:'specialise 形近', words:['specialise','specify','specialize'] },
+    { group:'sole 系列', words:['solely','sole','solemn'] },
+    { group:'stimulate 形近', words:['stimulate','simulate','imitate'] },
+    { group:'sweet 形近', words:['sweet','sweat','sweep','wipe','whip'] },
+    { group:'synthesis 形近', words:['synthesis','syndrome','sympathy','sympathize','symmetry','symphony'] },
+    { group:'shrewd 形近', words:['shrewd','brew','strew','steward','screw','crew'] },
+    { group:'stocking 系列', words:['stocking','stock','sock'] },
+    { group:'susceptible 近义', words:['susceptible','skeptical','vulnerable','suspicious'] },
+    { group:'sneak 形近', words:['sneak','snack','sake','snake','naked'] },
+    { group:'strap 形近', words:['strap','strip','strain','stripe'] },
+    { group:'sketch 形近', words:['sketch','stretch','snatch','scratch'] },
+    { group:'sanitation 形近', words:['sanitation','sanction','sanctuary','contamination','epidemic'] },
+    { group:'solitude 系列', words:['solitude','solid','solicitor','solidify'] },
+    { group:'trivial 形近', words:['trivial','vital','trial','trait','track','trace'] },
+    { group:'territory 系列', words:['territory','terror','terrify','terrific','terrorize','terrorist'] },
+    { group:'tangle 系列', words:['tangle','tangible','intangible','untangle'] },
+    { group:'tranquil 系列', words:['tranquil','tranquility','transport','transmit','transparent','transaction','transform','transfer'] },
+    { group:'obey 系列', words:['obey','obedient','obesity','obsess','obsession'] },
+    { group:'ore 形近', words:['ore','mine','mint','oak','owl','awe'] },
+    { group:'optical 形近', words:['optical','optional','optic','optimal','optimistic'] },
+    { group:'outright 近义', words:['outright','thorough','absolute','utter','forthright','explicit'] },
+    { group:'pierce 形近', words:['pierce','fierce','piece','price'] },
+    { group:'proficient 系列', words:['proficient','efficient','deficient','sufficient'] },
+    { group:'perceive 形近', words:['perceive','conceive','receive','deceive'] },
+    { group:'prospect 系列', words:['prospect','prospective','prosperous','prosperity','perspective'] },
+    { group:'propose 形近', words:['propose','proposition','proportion'] },
+    { group:'prim 系列', words:['prim','prime','primary','primitive','primordial','regime'] },
+    { group:'propel 形近', words:['propel','impel','repel','compel','proper','propose'] },
+    { group:'portray 系列', words:['portray','tray','betray','portrait','poetry'] },
+    { group:'previous 形近', words:['previous','precious','obvious'] },
+    { group:'precede 系列', words:['precede','precedent','precedence','precedented'] },
+    { group:'pledge 形近', words:['pledge','plunge','plague','plug','plateau'] },
+    { group:'portray 近义', words:['portray','depict','describe','betray','poetry','portrait'] },
+    { group:'peculiar 近义', words:['peculiar','special','particular','unique'] },
+    { group:'valid 系列', words:['valid','validate','invalid','availability','vitality'] },
+    { group:'vain 近义', words:['vain','futile'] },
+    { group:'volatile 形近', words:['volatile','versatile','ventilate'] },
+    { group:'virtuous 系列', words:['virtuous','ethical','incorruptible','beneficial','wholesome','virtual'] },
+    { group:'vacant 系列', words:['vacant','evacuate','vacuum','vague'] },
+    { group:'wheel 形近', words:['wheel','reel','peel','whale','heel'] },
+    { group:'wary 形近', words:['wary','ward','weary','wrap','vary'] }
+  ],
+  connector: [
+    { group:'表转折', words:['nevertheless','nonetheless','although','though','whereas','while','however','yet','but','in spite of','all the same'] }
+  ],
+  uncommon: [
+    { word:'accountable', meaning:'负有责任的' },
+    { word:'auto', meaning:'自动的；汽车' },
+    { word:'bypass', meaning:'绕过；心脏搭桥手术' },
+    { word:'basin', meaning:'洗手池；流域' },
+    { word:'confidential', meaning:'保密的' },
+    { word:'concrete', meaning:'混凝土；实在的/具体的' },
+    { word:'commit', meaning:'犯罪；承诺；投入；忠于' },
+    { word:'contention', meaning:'争论；观点/看法' },
+    { word:'dismiss', meaning:'不考虑；解雇；驳回' },
+    { word:'dark', meaning:'黑暗的；深色的' },
+    { word:'disguise', meaning:'掩盖' },
+    { word:'deprivation', meaning:'缺乏' },
+    { word:'deprive', meaning:'剥夺' },
+    { word:'elementary', meaning:'基本的' },
+    { word:'navigate', meaning:'导航；航行' },
+    { word:'negotiate', meaning:'谈判；协商' },
+    { word:'navigator', meaning:'导航仪；航海家' },
+    { word:'navy', meaning:'海军' },
+    { word:'observe', meaning:'观察；遵守' },
+    { word:'overhead', meaning:'在头上；天花板；一般管理费用' },
+    { word:'post', meaning:'邮政；发布；职位；帖子' },
+    { word:'profile', meaning:'简介；轮廓；形象' },
+    { word:'primitive', meaning:'原始的；简陋的' },
+    { word:'provision', meaning:'提供；准备；条款' },
+    { word:'principal', meaning:'首要的；重要的；校长' },
+    { word:'placement', meaning:'放置/安置；实习' },
+    { word:'race', meaning:'赛跑；肤色' },
+    { word:'reporter', meaning:'记者' },
+    { word:'refund', meaning:'退款' },
+    { word:'sign', meaning:'签订；标牌；迹象' },
+    { word:'slack', meaning:'萧条的；松懈的；松弛的' },
+    { word:'stump', meaning:'把…难住；残余部分' },
+    { word:'submission', meaning:'屈服/投降；提交；文件' },
+    { word:'shield', meaning:'保护；盾牌' },
+    { word:'session', meaning:'会议；一段时间；学年' },
+    { word:'variation', meaning:'变化/差异' },
+    { word:'wreck', meaning:'失事；破坏' }
+  ],
+  scene: [
+    { group:'商业', words:['foam economy','planned economy','market economy','commodity economy'] },
+    { group:'营养学', words:['nutrition','protein','carbohydrate','vitamin','fat','calorie','mineral'] },
+    { group:'疾病与健康状态', words:['diabetes','chronic disease','infectious disease','epidemic','pandemic','obesity','cardiovascular disease','mental health','diagnosis','prognosis'] },
+    { group:'医疗措施与研究', words:['treatment','therapy','vaccination','immunization','clinical trial','symptom','surgery','efficacy','side effect','genetic modification','placebo'] },
+    { group:'医疗系统与社会政策', words:['healthcare system','public health','insurance coverage','medical ethics','life expectancy','aging population','accessibility','physician','practitioner'] },
+    { group:'医疗常用搭配', words:['combat the disease','fight the disease','undergo surgery','reduce the risk of','be prone to','improve the quality of life','be detrimental to health'] }
+  ],
+  newword: [
+    { word:'crave', meaning:'渴望' },
+    { word:'complexion', meaning:'肤色；面色' },
+    { word:'comply', meaning:'遵守' },
+    { word:'contagious', meaning:'传染性的' },
+    { word:'compound', meaning:'复合物；加剧' },
+    { word:'caravan', meaning:'大篷车；旅行队' },
+    { word:'cynical', meaning:'愤世嫉俗的' },
+    { word:'cemetery', meaning:'墓地' },
+    { word:'dissert', meaning:'论述' },
+    { word:'dissertation', meaning:'论文' },
+    { word:'evaporate', meaning:'蒸发' },
+    { word:'evacuate', meaning:'疏散；撤离' },
+    { word:'indulge', meaning:'沉溺；放纵' },
+    { word:'inventory', meaning:'库存；清单' },
+    { word:'lipstick', meaning:'口红' },
+    { word:'medieval', meaning:'中世纪的' },
+    { word:'notwithstanding', meaning:'尽管' },
+    { word:'outskirts', meaning:'郊区' },
+    { word:'preferential', meaning:'优待的；优先的' },
+    { word:'portray', meaning:'描绘' },
+    { word:'predecessor', meaning:'前任；前身' },
+    { word:'propagation', meaning:'传播；繁殖' },
+    { word:'preoccupied', meaning:'全神贯注的' },
+    { word:'shrink', meaning:'收缩；退缩' },
+    { word:'splash', meaning:'溅泼' },
+    { word:'trivial', meaning:'琐碎的' },
+    { word:'wardrobe', meaning:'衣柜' }
+  ],
+  phrase: [
+    { phrase:'elevate his spirits', meaning:'振奋精神' },
+    { phrase:'elevate the mind', meaning:'提升思想' },
+    { phrase:'talent pool', meaning:'人才库' },
+    { phrase:'labor force', meaning:'劳动力' },
+    { phrase:'workforce', meaning:'劳动力' },
+    { phrase:'elite', meaning:'精英' },
+    { phrase:'brain trust', meaning:'智囊团' }
+  ]
+};
+
+// Build flat word list with dedup
+function buildAllWords() {
+  const seen = new Set();
+  const all = [];
+  function add(word, cat, group, meaning) {
+    const k = word.toLowerCase().trim();
+    if (seen.has(k)) return;
+    seen.add(k);
+    all.push({ word:word.trim(), category:cat, group:group||'', meaning:meaning||'' });
+  }
+  vocabularyData.synonym.forEach(g => g.words.forEach(w => add(w,'synonym',g.group)));
+  vocabularyData.shape.forEach(g => g.words.forEach(w => add(w,'shape',g.group)));
+  vocabularyData.connector.forEach(g => g.words.forEach(w => add(w,'connector',g.group)));
+  vocabularyData.uncommon.forEach(it => add(it.word,'uncommon','',it.meaning));
+  vocabularyData.scene.forEach(g => g.words.forEach(w => add(w,'scene',g.group)));
+  vocabularyData.newword.forEach(it => add(it.word,'newword','',it.meaning));
+  vocabularyData.phrase.forEach(it => add(it.phrase,'phrase','',it.meaning));
+  return all;
+}
+
+const allWords = buildAllWords();
+
+const catMeta = {
+  synonym: { name:'同义替换', color:'#38bdf8' },
+  shape: { name:'形近词', color:'#a78bfa' },
+  connector: { name:'连接词', color:'#f472b6' },
+  uncommon: { name:'熟词生义', color:'#f59e0b' },
+  scene: { name:'情景词', color:'#22c55e' },
+  newword: { name:'生词汇总', color:'#ef4444' },
+  phrase: { name:'词组', color:'#fb923c' }
+};
+
+// Group data for list view
+function getGroupedData(cat) {
+  if (cat === 'uncommon') {
+    return [{ group:'熟词生义', words: vocabularyData.uncommon.map(it => it.word), meanings: vocabularyData.uncommon.map(it => it.meaning) }];
+  }
+  if (cat === 'newword') {
+    return [{ group:'生词汇总', words: vocabularyData.newword.map(it => it.word), meanings: vocabularyData.newword.map(it => it.meaning) }];
+  }
+  if (cat === 'phrase') {
+    return [{ group:'词组', words: vocabularyData.phrase.map(it => it.phrase), meanings: vocabularyData.phrase.map(it => it.meaning) }];
+  }
+  if (cat === 'connector') return vocabularyData.connector;
+  if (cat === 'synonym') return vocabularyData.synonym;
+  if (cat === 'shape') return vocabularyData.shape;
+  if (cat === 'scene') return vocabularyData.scene;
+  return [];
+}
+
+function getMeaningFor(word, cat) {
+  if (cat === 'uncommon') {
+    const found = vocabularyData.uncommon.find(it => it.word.toLowerCase() === word.toLowerCase());
+    return found ? found.meaning : '';
+  }
+  if (cat === 'newword') {
+    const found = vocabularyData.newword.find(it => it.word.toLowerCase() === word.toLowerCase());
+    return found ? found.meaning : '';
+  }
+  if (cat === 'phrase') {
+    const found = vocabularyData.phrase.find(it => it.phrase.toLowerCase() === word.toLowerCase());
+    return found ? found.meaning : '';
+  }
+  if (cat === 'synonym') {
+    for (const g of vocabularyData.synonym) {
+      if (g.words.some(w => w.toLowerCase() === word.toLowerCase())) return g.group;
+    }
+  }
+  if (cat === 'shape') {
+    for (const g of vocabularyData.shape) {
+      if (g.words.some(w => w.toLowerCase() === word.toLowerCase())) return g.group;
+    }
+  }
+  if (cat === 'connector') return '表转折';
+  if (cat === 'scene') {
+    for (const g of vocabularyData.scene) {
+      if (g.words.some(w => w.toLowerCase() === word.toLowerCase())) return g.group;
+    }
+  }
+  return '';
+}
+
+// ========== STATE ==========
+let currentMode = 'list';
+let currentCat = 'all';
+let searchQuery = '';
+
+// Study state
+let studyCards = [];
+let studyIndex = 0;
+let studyFlipped = false;
+let unknownWords = []; // { word, meaning, group, category }
+let knownCount = 0;
+let studyHistory = []; // track action per card: 'known', 'unknown', or undefined
+let currentKh = null; // track keyboard handler to prevent duplicates
+let currentBtnHandlers = []; // track button handlers for cleanup
+
+// ========== RENDER ==========
+const content = document.getElementById('content');
+const searchInput = document.getElementById('searchInput');
+const statsRow = document.getElementById('statsRow');
+const catTabs = document.getElementById('catTabs');
+const totalCountEl = document.getElementById('totalCount');
+
+totalCountEl.textContent = allWords.length;
+
+function getFilteredWords() {
+  return allWords.filter(w => {
+    if (currentCat !== 'all' && w.category !== currentCat) return false;
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return w.word.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q) || w.group.toLowerCase().includes(q);
+  });
+}
+
+function renderStats() {
+  const filtered = getFilteredWords();
+  const cats = ['synonym','shape','connector','uncommon','scene','newword','phrase'];
+  let html = `<div class="stat${currentCat==='all'?' active':''}" data-cat="all"><div class="n">${allWords.length}</div><div class="l">总词汇</div></div>`;
+  html += `<div class="stat" data-cat="all" style="opacity:0.6"><div class="n">${filtered.length}</div><div class="l">当前</div></div>`;
+  cats.forEach(c => {
+    const count = allWords.filter(w => w.category === c).length;
+    html += `<div class="stat${currentCat===c?' active':''}" data-cat="${c}"><div class="n">${count}</div><div class="l">${catMeta[c].name}</div></div>`;
+  });
+  // Saved unknown
+  const saved = getSavedUnknown();
+  if (saved.length > 0) {
+    html += `<div class="stat" data-cat="saved" style="border-color:var(--danger)"><div class="n" style="color:var(--danger)">${saved.length}</div><div class="l">待复习</div></div>`;
+  }
+  statsRow.innerHTML = html;
+}
+
+function renderCatTabs() {
+  let html = `<button class="cat-tab ${currentCat==='all'?'active':''}" data-cat="all">全部</button>`;
+  Object.entries(catMeta).forEach(([key, meta]) => {
+    html += `<button class="cat-tab ${currentCat===key?'active':''}" data-cat="${key}">${meta.name}</button>`;
+  });
+  catTabs.innerHTML = html;
+}
+
+// ===== LIST VIEW =====
+function renderListView() {
+  const filtered = getFilteredWords();
+
+  // Group by category, then by sub-group
+  if (currentCat === 'all') {
+    // Show all categories as sections
+    let html = '';
+    const cats = ['synonym','shape','connector','uncommon','scene','newword','phrase'];
+    cats.forEach(c => {
+      const catWords = filtered.filter(w => w.category === c);
+      if (catWords.length === 0) return;
+      html += `<div style="margin-bottom:20px">`;
+      html += `<h3 style="font-size:1rem;margin-bottom:8px;color:${catMeta[c].color};display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:${catMeta[c].color};display:inline-block;"></span>
+        ${catMeta[c].name} <span style="font-size:0.75rem;color:var(--text2)">${catWords.length}词</span>
+      </h3>`;
+      html += renderGroupList(c, catWords);
+      html += `</div>`;
+    });
+    content.innerHTML = html || '<div class="empty">没有匹配的单词</div>';
+  } else {
+    const catWords = filtered.filter(w => w.category === currentCat);
+    if (catWords.length === 0) {
+      content.innerHTML = '<div class="empty">没有匹配的单词</div>';
+      return;
+    }
+    let html = `<h3 style="font-size:1rem;margin-bottom:10px;color:${catMeta[currentCat]?.color||'#fff'}">${catMeta[currentCat]?.name||''} · ${catWords.length}词</h3>`;
+    html += renderGroupList(currentCat, catWords);
+    content.innerHTML = html;
+  }
+
+  // Click handlers for group headers
+  content.querySelectorAll('.group-header').forEach(h => {
+    h.addEventListener('click', () => {
+      h.parentElement.classList.toggle('open');
+    });
+  });
+  // Click handlers for word tags
+  content.querySelectorAll('.word-tag').forEach(t => {
+    t.addEventListener('click', (e) => {
+      e.stopPropagation();
+      t.classList.toggle('show-mean');
+      const word = t.dataset.word;
+      if (word) speakWord(word);
+    });
+  });
+}
+
+function renderGroupList(cat, words) {
+  const groups = getGroupedData(cat);
+  let html = '<div class="group-list">';
+
+  groups.forEach(g => {
+    let groupWords;
+    if (cat === 'uncommon' || cat === 'newword' || cat === 'phrase') {
+      groupWords = words.filter(w => g.words.includes(w.word) || g.words.includes(w.phrase));
+    } else {
+      groupWords = words.filter(w => g.words.includes(w.word));
+    }
+    if (groupWords.length === 0) return;
+
+    html += `<div class="group-item">`;
+    html += `<div class="group-header">`;
+    html += `<span class="gname">${g.group}</span>`;
+    html += `<span class="gcount">${groupWords.length}词</span>`;
+    html += `<span class="garrow">▶</span>`;
+    html += `</div>`;
+    html += `<div class="group-body"><div class="word-tags">`;
+
+    groupWords.forEach(w => {
+      const meaning = w.meaning || getMeaningFor(w.word, cat);
+      html += `<span class="word-tag" data-word="${w.word.replace(/"/g,'&quot;')}">${w.word}<span class="tag-mean"> — ${meaning}</span></span>`;
+    });
+
+    html += `</div></div></div>`;
+  });
+
+  html += '</div>';
+  return html;
+}
+
+// ===== STUDY VIEW =====
+const STORAGE_KEY = 'vocab_unknown_words';
+
+function getSavedUnknown() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveUnknown(arr) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+function clearSavedUnknown() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+function renderStudySetup(prefillUnknown) {
+  let words;
+  if (prefillUnknown) {
+    words = getSavedUnknown();
+  } else {
+    words = getFilteredWords();
+  }
+
+  if (words.length === 0) {
+    content.innerHTML = `<div class="empty">
+      <p style="font-size:1.2rem;margin-bottom:12px;">${prefillUnknown ? '没有待复习的生词' : '当前筛选条件下没有单词'}</p>
+      <button class="btn btn-neutral" onclick="currentMode='list';renderAll();">返回列表</button>
+    </div>`;
+    return;
+  }
+
+  const saved = getSavedUnknown();
+
+  let html = `<div class="study-setup">`;
+  html += `<h3>闪卡学习设置</h3>`;
+
+  if (!prefillUnknown && saved.length > 0) {
+    html += `<div style="margin-bottom:14px;padding:10px 14px;background:rgba(239,68,68,0.08);border-radius:8px;font-size:0.85rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <span><span style="color:var(--danger);font-weight:600;">${saved.length}</span> 个生词等待复习</span>
+      <span>
+        <button class="btn btn-neutral" style="padding:6px 14px;font-size:0.8rem;" onclick="renderStudySetup(true)">复习生词</button>
+        <button class="btn btn-neutral" style="padding:6px 14px;font-size:0.8rem;" onclick="clearSavedUnknown();renderStudySetup(false)">清空</button>
+      </span>
+    </div>`;
+  }
+
+  if (prefillUnknown) {
+    html += `<div style="margin-bottom:12px;font-size:0.85rem;color:var(--danger);">正在使用待复习生词 (<strong>${words.length}</strong> 词)</div>`;
+  }
+
+  html += `<div class="setup-row">
+    <label>抽取数量</label>
+    <select id="studyCount">`;
+  const opts = [10,20,30,50,100];
+  opts.forEach(n => {
+    html += `<option value="${n}" ${n===20?'selected':''}>${n} 词</option>`;
+  });
+  html += `<option value="0">全部 (${words.length}词)</option>`;
+  html += `</select></div>`;
+
+  if (!prefillUnknown) {
+    html += `<div class="setup-row"><label>选择分类</label><div class="cat-checks">`;
+    Object.entries(catMeta).forEach(([key, meta]) => {
+      const count = words.filter(w => w.category === key).length;
+      html += `<label class="cat-check checked" data-cat="${key}">${meta.name} (${count})</label>`;
+    });
+    html += `</div></div>`;
+  }
+
+  html += `<button class="btn btn-go" id="btnStartStudy">开始学习</button>`;
+  html += `</div>`;
+  content.innerHTML = html;
+
+  // Cat check toggle
+  if (!prefillUnknown) {
+    content.querySelectorAll('.cat-check').forEach(cc => {
+      cc.addEventListener('click', (e) => {
+        e.preventDefault();
+        cc.classList.toggle('checked');
+      });
+    });
+  }
+
+  document.getElementById('btnStartStudy').addEventListener('click', () => {
+    let pool;
+    if (prefillUnknown) {
+      pool = getSavedUnknown();
+    } else {
+      const selectedCats = [];
+      content.querySelectorAll('.cat-check.checked').forEach(cc => selectedCats.push(cc.dataset.cat));
+      pool = words.filter(w => selectedCats.includes(w.category));
+    }
+
+    if (pool.length === 0) {
+      alert('没有可用的单词，请选择分类。');
+      return;
+    }
+
+    const count = parseInt(document.getElementById('studyCount').value);
+    // Shuffle
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    studyCards = count > 0 ? shuffled.slice(0, count) : shuffled;
+    studyIndex = 0;
+    studyFlipped = false;
+    unknownWords = [];
+    knownCount = 0;
+    studyHistory = [];
+    renderStudyCard();
+  });
+}
+
+function renderStudyCard() {
+  if (studyIndex >= studyCards.length) {
+    renderStudyResults();
+    return;
+  }
+
+  const card = studyCards[studyIndex];
+  const pct = Math.round((studyIndex / studyCards.length) * 100);
+  const meaning = card.meaning || getMeaningFor(card.word, card.category);
+
+  content.innerHTML = `
+    <div class="study-container">
+      <div class="study-progress"><div class="bar" style="width:${pct}%"></div></div>
+      <div style="font-size:0.8rem;color:var(--text2);margin-bottom:10px;">${studyIndex + 1} / ${studyCards.length}</div>
+      <div class="study-card ${studyFlipped?'flipped':''}" id="studyCard">
+        <div class="sc-num">${studyIndex + 1}/${studyCards.length}</div>
+        <div class="sc-word">${card.word}</div>
+        ${studyFlipped ? `
+          <div class="sc-mean">${meaning || card.group}</div>
+          ${card.group ? `<div class="sc-group">${card.group}</div>` : ''}
+        ` : `
+          <div class="sc-pron">点击翻转查看释义</div>
+        `}
+        <div class="sc-hint">Space 翻转 | Home/← 不认识 | End/→ 认识 | ↑ 上一个</div>
+      </div>
+      <div class="study-btns">
+        <button class="btn btn-neutral" id="btnPrev" ${studyIndex === 0 ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''}>上一个</button>
+        <button class="btn btn-unknown" id="btnUnknown">不认识</button>
+        <button class="btn btn-know" id="btnKnow">认识</button>
+      </div>
+    </div>`;
+
+  document.getElementById('studyCard').addEventListener('click', () => {
+    studyFlipped = true;
+    renderStudyCard();
+  });
+
+  document.getElementById('btnKnow').addEventListener('click', () => {
+    studyHistory[studyIndex] = 'known';
+    knownCount++;
+    studyIndex++;
+    studyFlipped = false;
+    renderStudyCard();
+  });
+
+  document.getElementById('btnUnknown').addEventListener('click', () => {
+    studyHistory[studyIndex] = 'unknown';
+    unknownWords.push({
+      word: card.word,
+      meaning: meaning,
+      group: card.group,
+      category: card.category
+    });
+    studyIndex++;
+    studyFlipped = false;
+    renderStudyCard();
+  });
+
+  document.getElementById('btnPrev').addEventListener('click', () => {
+    goToPreviousCard();
+  });
+
+  // Keyboard: Space=翻转, Left/Home=不认识, Right/End=认识
+  if (currentKh) document.removeEventListener('keydown', currentKh);
+  const kh = (e) => {
+    if (currentMode !== 'study') { document.removeEventListener('keydown', kh); currentKh = null; return; }
+    if (e.key === ' ') {
+      e.preventDefault();
+      studyFlipped = !studyFlipped;
+      renderStudyCard();
+      return;
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'Home') {
+      e.preventDefault();
+      if (!studyFlipped) { studyFlipped = true; renderStudyCard(); }
+      else { const btn = document.getElementById('btnUnknown'); if (btn) btn.click(); }
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'End') {
+      e.preventDefault();
+      if (!studyFlipped) { studyFlipped = true; renderStudyCard(); }
+      else { const btn = document.getElementById('btnKnow'); if (btn) btn.click(); }
+      return;
+    }
+    if (e.key === 'ArrowUp' || e.key === 'Backspace') {
+      e.preventDefault();
+      goToPreviousCard();
+      return;
+    }
+  };
+  document.addEventListener('keydown', kh);
+  currentKh = kh;
+}
+
+function goToPreviousCard() {
+  if (studyIndex <= 0) return;
+  studyIndex--;
+  const prevAction = studyHistory[studyIndex];
+  if (prevAction === 'known') {
+    knownCount--;
+  } else if (prevAction === 'unknown') {
+    unknownWords.pop();
+  }
+  studyHistory[studyIndex] = undefined;
+  studyFlipped = false;
+  renderStudyCard();
+}
+
+function renderStudyResults() {
+  const total = studyCards.length;
+  const unknownCount = unknownWords.length;
+
+  // Save unknown words to localStorage, merge with existing
+  if (unknownWords.length > 0) {
+    const existing = getSavedUnknown();
+    const existingKeys = new Set(existing.map(w => w.word.toLowerCase()));
+    const newOnes = unknownWords.filter(w => !existingKeys.has(w.word.toLowerCase()));
+    if (newOnes.length > 0) {
+      saveUnknown([...existing, ...newOnes]);
+    }
+  }
+
+  const saved = getSavedUnknown();
+
+  let html = `<div class="study-results">`;
+  html += `<h3>本轮完成</h3>`;
+  html += `<div class="result-stat">
+    <div><div class="big green">${knownCount}</div><div style="font-size:0.8rem;color:var(--text2)">认识</div></div>
+    <div><div class="big red">${unknownCount}</div><div style="font-size:0.8rem;color:var(--text2)">不认识</div></div>
+  </div>`;
+
+  if (unknownWords.length > 0) {
+    html += `<div style="font-size:0.85rem;color:var(--text2);margin-top:8px;">本轮不认识的词：</div>`;
+    html += `<div class="unknown-list">`;
+    unknownWords.forEach(w => {
+      html += `<span class="ul-word">${w.word}<span style="color:var(--accent2);margin-left:4px;font-size:0.75rem;">${w.meaning}</span></span>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">`;
+  html += `<button class="btn btn-know" onclick="studyCards=[...unknownWords].sort(()=>Math.random()-0.5);studyIndex=0;studyFlipped=false;knownCount=0;unknownWords=[];studyHistory=[];if(studyCards.length===0){alert('没有生词需要复习');return;}renderStudyCard();">仅复习生词 (${unknownCount})</button>`;
+  html += `<button class="btn btn-neutral" onclick="renderStudySetup(false)">新的一轮</button>`;
+  if (saved.length > 0) {
+    html += `<button class="btn btn-neutral" style="border-color:var(--danger);color:var(--danger);" onclick="clearSavedUnknown();renderStudySetup(false)">清空所有生词</button>`;
+  }
+  html += `<button class="btn btn-neutral" onclick="currentMode='list';renderAll();">返回列表</button>`;
+  html += `</div>`;
+
+  if (saved.length > 0) {
+    html += `<div style="margin-top:16px;font-size:0.8rem;color:var(--text2);">累计待复习生词: <span style="color:var(--danger);font-weight:600;">${saved.length}</span> 个</div>`;
+  }
+
+  html += `</div>`;
+  content.innerHTML = html;
+}
+
+// ===== HELPERS =====
+function speakWord(word) {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = 'en-US';
+    u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }
+}
+
+function renderAll() {
+  renderStats();
+  renderCatTabs();
+  if (currentMode === 'list') {
+    renderListView();
+  } else {
+    renderStudySetup(false);
+  }
+}
+
+// ===== EVENTS =====
+searchInput.addEventListener('input', () => {
+  searchQuery = searchInput.value.trim();
+  renderAll();
+});
+
+catTabs.addEventListener('click', e => {
+  const btn = e.target.closest('.cat-tab');
+  if (!btn) return;
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCat = btn.dataset.cat;
+  renderAll();
+});
+
+statsRow.addEventListener('click', e => {
+  const stat = e.target.closest('.stat');
+  if (!stat) return;
+  const cat = stat.dataset.cat;
+  if (!cat) return;
+  if (cat === 'saved') {
+    // Switch to study mode with saved unknown words
+    currentMode = 'study';
+    document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+    document.querySelector('.mode-tab[data-mode="study"]')?.classList.add('active');
+    if (currentKh) { document.removeEventListener('keydown', currentKh); currentKh = null; }
+    renderStudySetup(true);
+    return;
+  }
+  // Switch to list mode and filter by category
+  currentMode = 'list';
+  document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('.mode-tab[data-mode="list"]')?.classList.add('active');
+  if (currentKh) { document.removeEventListener('keydown', currentKh); currentKh = null; }
+  currentCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  const targetTab = document.querySelector(`.cat-tab[data-cat="${cat}"]`);
+  if (targetTab) targetTab.classList.add('active');
+  searchInput.value = '';
+  searchQuery = '';
+  renderAll();
+});
+
+document.querySelector('.mode-tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.mode-tab');
+  if (!btn) return;
+  document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMode = btn.dataset.mode;
+  if (currentKh) { document.removeEventListener('keydown', currentKh); currentKh = null; }
+  renderAll();
+});
+
+// Keyboard shortcut for list view - click to show meanings
+document.addEventListener('keydown', e => {
+  if (currentMode === 'list' && e.key === 'm') {
+    document.querySelectorAll('.word-tag').forEach(t => t.classList.toggle('show-mean'));
+  }
+});
+
+// Init
+renderAll();
+</script>
+</body>
+</html>
