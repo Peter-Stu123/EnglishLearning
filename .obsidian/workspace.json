@@ -220,7 +220,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -250,7 +250,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8c535cc207f5524c",
+  "active": "cde4d52ad782da4b",
   "lastOpenFiles": [
     "自行整理/06 生词汇总.md",
     "自行整理/04熟词生义.md",
