@@ -892,6 +892,16 @@
     "expandedKeys": [
       "item-3-3"
     ],
-    "scroll": 60.27267819086228
+    "scroll": 60.27267819086228,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    }
   }
 }
