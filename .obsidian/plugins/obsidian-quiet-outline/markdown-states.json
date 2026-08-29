@@ -906,5 +906,37 @@
   },
   "语法/固定搭配/未命名.md": {
     "scroll": 0
+  },
+  "语法/固定搭配/as/未命名.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 2012,
+        "ch": 164
+      },
+      "to": {
+        "line": 2012,
+        "ch": 164
+      }
+    },
+    "expandedKeys": []
+  },
+  "语法/固定搭配/as/as.md": {
+    "expandedKeys": [],
+    "cursor": {
+      "from": {
+        "line": 8,
+        "ch": 0
+      },
+      "to": {
+        "line": 8,
+        "ch": 0
+      }
+    },
+    "scroll": 6.901960118465041
+  },
+  "语法/词性/12介词/什么是介词.md": {
+    "expandedKeys": [],
+    "scroll": 6.901960118465041
   }
 }
