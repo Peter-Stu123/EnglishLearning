@@ -969,7 +969,17 @@
   },
   "语法/句子分析/03复合句/01名词性从句/名词性从句的 引导词.md": {
     "scroll": 0,
-    "expandedKeys": []
+    "expandedKeys": [],
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 68
+      },
+      "to": {
+        "line": 2,
+        "ch": 68
+      }
+    }
   },
   "语法/基础/状语/未命名.md": {
     "expandedKeys": [],
@@ -1002,5 +1012,21 @@
   "语法/基础/状语/01时间状语.md": {
     "expandedKeys": [],
     "scroll": 0
+  },
+  "语法/句子分析/03复合句/01名词性从句/引导词.md": {
+    "cursor": {
+      "from": {
+        "line": 29,
+        "ch": 0
+      },
+      "to": {
+        "line": 29,
+        "ch": 0
+      }
+    },
+    "scroll": 61.632698310949415,
+    "expandedKeys": [
+      "item-1-1"
+    ]
   }
 }
