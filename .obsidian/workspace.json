@@ -110,7 +110,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "distinguish",
+                "query": "as",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -250,8 +250,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8008d49e9e37413b",
+  "active": "8c535cc207f5524c",
   "lastOpenFiles": [
+    "语法/固定搭配/as",
+    "语法/固定搭配/未命名.md",
+    "语法/固定搭配/05形容词补语结构.md",
     "语法/固定搭配/后置定语/后置定语入门.md",
     "语法/句子分析/03复合句/01名词性从句/01主语从句/01主语从句.md",
     "语法/时态/完成时/03完成进行时.md",
@@ -285,9 +288,6 @@
     "英语词义分类数据库（大学版）/01基础领域/12科教/00科教组目录（复习）.md",
     "外刊学习/2027-7/The world this  week- politics.md",
     "英语词义分类数据库（大学版）/02专业学科/02地理/00地理组目录（复习）.md",
-    "英语词义分类数据库（大学版）/27位移/01移动 静止.md",
-    "英语词义分类数据库（大学版）/02专业学科/02地理/06江河 湖海.md",
-    "英语词义分类数据库（大学版）/14态度性格/00态度性格组目录（复习）.md",
     "外刊学习/2027-7/TheEconomist.2026.07.04.pdf",
     "语法/英语知识总结.pdf",
     "外刊学习/The Dancing Species",
