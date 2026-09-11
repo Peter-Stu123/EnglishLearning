@@ -886,7 +886,17 @@
     "expandedKeys": [
       "item-3-2"
     ],
-    "scroll": 32.129199074449794
+    "scroll": 32.129199074449794,
+    "cursor": {
+      "from": {
+        "line": 52,
+        "ch": 27
+      },
+      "to": {
+        "line": 52,
+        "ch": 27
+      }
+    }
   },
   "语法/固定搭配/05形容词补语结构.md": {
     "expandedKeys": [
