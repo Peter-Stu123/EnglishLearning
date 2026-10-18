@@ -141,8 +141,7 @@
               "title": "查词面板"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -221,7 +220,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -251,7 +250,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e075a6d931db7135",
+  "active": "cde4d52ad782da4b",
   "lastOpenFiles": [
     "英语词义分类数据库（大学版）/28秩序/02种类 类别.md",
     "英语词义分类数据库（大学版）/11生活相关/01衣着穿戴/01服装 衣裤.md",
